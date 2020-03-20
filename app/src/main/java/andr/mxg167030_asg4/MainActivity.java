@@ -15,15 +15,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ListView scoreListView = (ListView) findViewById(R.id.high_score_list);
+
         Database.initializeDatabase(getApplicationContext());
 
-        Database.addHighScore(getApplicationContext(), new HighScore("mugdha", new Date(System.currentTimeMillis()), 513));
-        Database.addHighScore(getApplicationContext(), new HighScore("n", new Date(System.currentTimeMillis()), 1000));
         Database.addHighScore(getApplicationContext(), new HighScore("e", new Date(System.currentTimeMillis()-100), 1000));
+        System.out.println("*******************8" + Database.getScores(getApplicationContext()).toString());
+
         Database.addHighScore(getApplicationContext(), new HighScore("f", new Date(System.currentTimeMillis()-200), 1000));
-        Database.addHighScore(getApplicationContext(), new HighScore("d", new Date(System.currentTimeMillis()), 30));
-        Database.addHighScore(getApplicationContext(), new HighScore("c", new Date(System.currentTimeMillis()), 1565));
-        Database.addHighScore(getApplicationContext(), new HighScore("a", new Date(System.currentTimeMillis()), 1234));
+//        Database.addHighScore(getApplicationContext(), new HighScore("d", new Date(System.currentTimeMillis()), 30));
+//        Database.addHighScore(getApplicationContext(), new HighScore("c", new Date(System.currentTimeMillis()), 1565));
+//        Database.addHighScore(getApplicationContext(), new HighScore("a", new Date(System.currentTimeMillis()), 1234));
 //        Database.addHighScore(getApplicationContext(), new HighScore("b", new Date(System.currentTimeMillis()), 4568));
 //        Database.addHighScore(getApplicationContext(), new HighScore("g", new Date(System.currentTimeMillis()), 2222));
 //        Database.addHighScore(getApplicationContext(), new HighScore("h", new Date(System.currentTimeMillis()), 0));
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 //        Database.addHighScore(getApplicationContext(), new HighScore("q", new Date(System.currentTimeMillis()), 1515));
 //        Database.addHighScore(getApplicationContext(), new HighScore("r", new Date(System.currentTimeMillis()), 3));
 
+        System.out.println("*******************8" + Database.getScores(getApplicationContext()));
         ScoreListAdapter scoreListAdapter = new ScoreListAdapter(this, R.layout.score_adapter_view_layout, Database.getScores(this));
         scoreListView.setAdapter(scoreListAdapter);
     }

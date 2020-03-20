@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.PrintWriter;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,8 +15,10 @@ import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class Database {
-    private static PriorityQueue<HighScore> highScores;
+    static PriorityQueue<HighScore> highScores;
+    private static File scores_file;
     private static String strScorefile = "data.txt";
+
     static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm a, zzzz");
 
     public static void initializeDatabase(Context context){
@@ -29,6 +31,7 @@ public class Database {
         while (highScores.size() > 12){
             highScores.poll();
         }
+        System.out.println("*******************7" + highScores.toString());
 
         writeScoresToFile(context);
     }
@@ -43,62 +46,62 @@ public class Database {
         return list;
     }
 
-    private static void writeScoresToFile(Context context){
-        FileOutputStream fileOutputStream = new FileOutputStream()
-        PrintWriter scores = null;
-
+    private static void writeScoresToFile(Context context)
+    {
         try
         {
-            scores_file = new File(context.getFilesDir(), strScorefile);
-            scores = new PrintWriter(scores_file);
-            for(HighScore hs : highScores){
-                scores.print(hs.getName() + "\t");
-                scores.print(dateFormat.format(hs.getDate()) + "\t");
-                scores.println(hs.getScore());
-            }
-        }
-        catch (Exception ex)
-        {
-            //TODO: Handle the error.
-        }
+            FileOutputStream score_file;
+            score_file = context.openFileOutput("scores.txt", Context.MODE_PRIVATE);
+            OutputStreamWriter writer = new OutputStreamWriter(score_file);
 
+            for(HighScore hs : highScores)
+            {
+                writer.write(hs.getName() + "\t");
+                writer.write(dateFormat.format(hs.getDate()) + "\t");
+                writer.write(hs.getScore() + "\n");
+            }
+            writer.flush();
+            writer.close();
+        }
+        catch (Exception e)
+        {
+            //TODO: something something handle
+        }
     }
 
-    private static void readScoresFromFile(Context context) throws FileNotFoundException {
+    private static void readScoresFromFile(Context context){
         highScores = new PriorityQueue<>();
-        FileInputStream inputStream = new FileInputStream(strScorefile);
 
+        try {
+            FileInputStream inputStream = new FileInputStream(strScorefile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         try
         {
             scores_file = new File(context.getFilesDir(), strScorefile);
-            scores = new Scanner(scores_file);
+            Scanner scores = new Scanner(scores_file);
             String entry = null;
             String[] data = null;
             String name = null;
             Date date = null;
             int score = 0;
-
             while (scores.hasNext()){
                 entry = scores.nextLine();
                 data = entry.split("\t");
-
                 name = data[0];
                 date = dateFormat.parse(data[1]);
                 score = Integer.parseInt(data[2]);
-
                 highScores.add(new HighScore(name, date, score));
             }
-
             while (highScores.size() > 12){
                 highScores.poll();
             }
-
         }
         catch (Exception ex)
         {
             //TODO: Handle the error
         }
-
     }
 
 
