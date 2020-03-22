@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class Database {
     static PriorityQueue<HighScore> highScores;
     private static File scores_file;
-    private static String strScorefile = "data.txt";
+    private static String scores_filename = "scores.txt";
 
     static SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm a, zzzz");
 
@@ -48,10 +48,11 @@ public class Database {
 
     private static void writeScoresToFile(Context context)
     {
+        System.out.println("***************" + highScores.toString());
         try
         {
-            FileOutputStream score_file;
-            score_file = context.openFileOutput("scores.txt", Context.MODE_PRIVATE);
+            context.deleteFile(scores_filename);
+            FileOutputStream score_file = context.openFileOutput(scores_filename, Context.MODE_PRIVATE);
             OutputStreamWriter writer = new OutputStreamWriter(score_file);
 
             for(HighScore hs : highScores)
@@ -73,13 +74,13 @@ public class Database {
         highScores = new PriorityQueue<>();
 
         try {
-            FileInputStream inputStream = new FileInputStream(strScorefile);
+            FileInputStream inputStream = new FileInputStream(scores_filename);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         try
         {
-            scores_file = new File(context.getFilesDir(), strScorefile);
+            scores_file = new File(context.getFilesDir(), scores_filename);
             Scanner scores = new Scanner(scores_file);
             String entry = null;
             String[] data = null;

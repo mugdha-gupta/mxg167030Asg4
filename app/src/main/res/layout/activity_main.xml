@@ -13,15 +13,61 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         android:text="High Scores"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:padding="3dp"
+        android:paddingBottom="8dp"
         ></TextView>
 
-    <ListView
-        android:id="@+id/high_score_list"
+    <LinearLayout
+        android:id="@+id/column_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/title">
+        android:padding="3dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:weightSum="100">
 
-    </ListView>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Name"
+            android:layout_weight="33.33"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:padding="10dp"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"></TextView>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Date"
+            android:layout_weight="33.33"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:padding="10dp"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"></TextView>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Score"
+            android:layout_weight="33.33"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:padding="10dp"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"></TextView>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/column_header">
+
+
+        <ListView
+            android:id="@+id/high_score_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+    </ScrollView>
 
 
 

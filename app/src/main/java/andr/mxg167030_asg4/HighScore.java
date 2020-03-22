@@ -1,8 +1,9 @@
 package andr.mxg167030_asg4;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class HighScore implements Comparable<HighScore>{
+public class HighScore implements Comparable<HighScore>, Serializable {
     private String name;
     private Date date;
     private int score;
@@ -47,4 +48,5 @@ public class HighScore implements Comparable<HighScore>{
         return this.getScore() > o.getScore()? 1 : -1;
 
     }
+
 }
